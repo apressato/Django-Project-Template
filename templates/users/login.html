@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'app/images/favicon.ico' %}">
+
+    {% if title %}
+        <title>Support Dashboard - {{ title }}</title>
+    {% else %}
+        <title>Support Dashboard</title>
+    {% endif %}
+
+    <link rel="stylesheet" href="{% static 'users/css/login.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'users/fonts/fontawesome5-overrides.min.css' %}">
+
+{% block styles %}
+    <style>
+        .bg-gradient-primary {
+            background: url("{%  static 'users/images/loginform_background3.png' %}") no-repeat;
+            background-size: cover;
+          /*background-attachment: fixed;*/
+        }
+    </style>
+{% endblock %}
+
+</head>
+
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image" style="background-image: url(&quot;{% static 'users/images/loginform.jpg' %}&quot;);"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                    </div>
+                                    <form method="POST" action="" class="user">
+										{% csrf_token %}
+                                        <div class="form-group">
+											{% if form.username.errors %}
+												<input class="form-control form-control-user is-invalid" type="text" id="exampleInputEmail" aria-describedby="userHelp" placeholder="Enter Account Name..." name="username">
+												<div class="invalid-feedback">
+													{% for error in form.username.errors %}
+														<span>{{ error }}</span>
+													{% endfor %}
+												</div>
+											{% else %}
+												<input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="userHelp" placeholder="Enter Account Name..." name="username">
+											{% endif %}
+										</div>
+                                        <div class="form-group">
+											{% if form.password.errors %}
+												<input class="form-control form-control-user is-invalid" type="password" id="exampleInputPassword" placeholder="Password" name="password">
+												<div class="invalid-feedback">
+													{% for error in form.password.errors %}
+														<span>{{ error }}</span>
+													{% endfor %}
+												</div>
+											{% else %}
+												<input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password">
+											{% endif %}
+										</div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <div class="form-check">
+													<input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1" name="remember" value="y">
+													<label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label>
+												</div>
+                                            </div>
+                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
+                                        <hr>
+										<a class="btn btn-primary btn-block text-white btn-google btn-user" role="button">
+											<i class="fab fa-google"></i>&nbsp; Login with Google
+										</a>
+										<a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button">
+											<i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook
+										</a>
+                                        <hr>
+                                    </form>
+                                    <div class="text-center"><a class="small" href="#">Forgot Password?</a></div>
+                                    <div class="text-center"><a class="small" href="#" data-toggle="modal" data-target="#SorryModal">Create an Account!</a></div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="SorryModal" tabindex="-1" aria-labelledby="SorryModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="SorryModalLabel">Sorry...</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                              For security reasons only an <span class="font-weight-bolder text-primary">Admin</span> can create users.<br/>
+                                              Please contact a Support_DashBord <span class="font-weight-bolder text-primary">Admin</span> to create your user.
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- Modal -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{% if message.level_tag == 'error' %}danger{% else %}{{ message.level_tag }}{% endif %}" style="margin-top: -40px;">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="{% static 'users/js/bs-init.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{% static 'users/js/theme.js' %}"></script>
+</body>
+
+</html>

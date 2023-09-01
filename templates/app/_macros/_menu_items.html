@@ -1,0 +1,63 @@
+{% load macros %}
+
+{% macro menu_item_small label link %}
+    <li><a class="dropdown-item mt-0 mb-0 pt-1 pb-1" href="{{ link }}">{{ label }}</a></li>
+{% endmacro %}
+
+{% macro menu_item_normal label link %}
+    <li><a class="dropdown-item" href="{{ link }}">{{ label }}</a></li>
+{% endmacro %}
+
+{% macro menu_item label link %}
+    {% if request.user.is_authenticated %}
+        {% if "100" in request.user.Screen_scale %}
+            {% use_macro menu_item_normal label link %}
+        {% else %}
+            {% use_macro menu_item_small label link %}
+        {% endif %}
+    {% else %}
+        {% use_macro menu_item_normal label link %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro menu_divider_small %}
+    <li class="dropdown-divider mt-0 mb-0 pt-1 pb-1"></li>
+{% endmacro %}
+
+{% macro menu_divider_normal %}
+    <li class="dropdown-divider"></li>
+{% endmacro %}
+
+{% macro menu_divider %}
+    {% if request.user.is_authenticated %}
+        {% if "100" in request.user.Screen_scale %}
+            {% use_macro menu_divider_normal %}
+        {% else %}
+            {% use_macro menu_divider_small %}
+        {% endif %}
+    {% else %}
+        {% use_macro menu_divider_normal %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro dropdown_item_small item_label %}
+    <a class="dropdown-item mt-0 mb-0 pt-1 pb-1" href="#">{{ elementKey }} &raquo;</a>
+{% endmacro %}
+
+{% macro dropdown_item_normal item_label %}
+    <a class="dropdown-item" href="#">{{ item_label }} &raquo;</a>
+{% endmacro %}
+
+{% macro dropdown_item item_label %}
+    {% if request.user.is_authenticated %}
+        {% if "100" in request.user.Screen_scale %}
+            {% use_macro dropdown_item_normal item_label %}
+        {% else %}
+            {% use_macro dropdown_item_small item_label %}
+        {% endif %}
+    {% else %}
+        {% use_macro dropdown_item_normal item_label %}
+    {% endif %}
+{% endmacro %}

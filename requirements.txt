@@ -1,0 +1,7 @@
+Django
+django-ckeditor
+django-macros
+django-extensions
+Pillow
+Markdown
+python-dotenv

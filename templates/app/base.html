@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load macros %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="">
+    <meta name="author" content="Ascanio Pressato">
+    {% block meta %}
+    {%endblock%}
+    <link rel="icon" href="{% static 'app/images/favicon.ico' %}"  type="image/x-icon">
+
+    {% if title %}
+        <title>Support Dashboard - {{ title }}</title>
+    {% else %}
+        <title>Support Dashboard</title>
+    {% endif %}
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+	<link 
+	  rel="stylesheet" 
+	  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	/>
+	<link
+	  rel="stylesheet"
+	  href="https://fonts.googleapis.com/css?family=Roboto:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	/>
+
+
+    {% block stylesheet_before %}
+    <!-- MDB -->
+    <link rel="stylesheet" type="text/css" href="{% static 'MDB5UIKIT/css/mdb.min.css' %}">
+    {% endblock %}
+
+    {% block stylesheet_middle %}
+    {% endblock %}
+
+    {% block stylesheet_variables %}
+    {% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="{%  static 'app/css/basestyles.css' %}">
+
+    {%block stylesheet_after%}
+    {%endblock%}
+
+    {%block styles%}
+    {%endblock%}
+
+</head>
+<body>
+    {% include 'app/navbar.html' %}
+    {% block searchbox %}{% endblock %}
+
+    <section class="container container-spacer mt-3">
+        {% block content %}{% endblock %}
+    </section>
+
+    {% include 'app/footer.html' %}
+
+    {% block script %}
+        <!-- MDB -->
+        <script type="text/javascript" src="{% static 'MDB5UIKIT/js/mdb.min.js' %}"></script>
+		<!-- JQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    {% endblock %}
+    {% block custom_script_after %}
+    {% endblock %}	
+</body>
+</html>

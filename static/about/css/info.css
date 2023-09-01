@@ -1,0 +1,38 @@
+/*
+ * Copyright (c) 2020-2023 by APressato <apressato.oss@gmail.com>
+ *
+ * This file is part of Support_DashBoard.
+ * Support_DashBoard is a website to help Support Teams in their work.
+ *
+ * Support_DashBoard is free software: you can redistribute it and/or modify
+ * it under the terms of the
+ * Creative Commons Attribution ShareAlike 4.0 International
+ * as published by Creative Commons.
+ *
+ * Support_DashBoard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY.  See the
+ * Creative Commons Attribution ShareAlike 4.0 International for more details.
+ *
+ * You should have received a copy of the
+ * Creative Commons Attribution ShareAlike 4.0 International
+ * along with Support_DashBoard. If not,
+ * see <https://creativecommons.org/licenses/by-sa/4.0/legalcode>.
+ */
+
+        .content {background-color: #fff; color: #222; font-family: sans-serif;}
+        pre {margin: 0; font-family: monospace;}
+        table {border-collapse: collapse; border: 0; width: 934px; box-shadow: 1px 2px 3px #ccc;}
+        .center {text-align: center;}
+        .center table {margin: 1em auto; text-align: left;}
+        .center th {text-align: center !important;}
+        td, th {border: 1px solid #666; font-size: 75%; vertical-align: baseline; padding: 4px 5px;}
+        .p {text-align: left;}
+        .e {background-color: #ccf; width: 300px; font-weight: bold;}
+        .h {background-color: #99c; font-weight: bold; position: relative;}
+        .v {background-color: #ddd; max-width: 300px; overflow-x: auto;}
+        .v i {color: #999;}
+        h1.p {text-align: center;}
+        hr {width: 934px; background-color: #ccc; border: 0; height: 1px;}
+        .logoimg {float: left; border: 0; width: 96px; height: 96px;}
+        .infoimg {float: right; border: 0; width: 96px; height: 96px;}

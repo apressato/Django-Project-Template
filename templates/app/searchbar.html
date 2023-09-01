@@ -1,0 +1,16 @@
+    <form class="input-group ms-4 me-4 searchbar">
+      <input
+        type="search"
+        class="form-control rounded"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        name="search_query"
+        value="{{search_query}}"
+        {{enable_searchbar|default_if_none:"disabled"}}
+        {{enable_searchbar|default:"disabled"}}
+      />
+      <span class="input-group-text text-white border-4" id="search-addon" style=" background-color: rgba(83, 82,1106,.2);">
+        <i class="fas fa-search"></i>
+      </span>
+    </form>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ascanio Pressato">
+    {% block meta %}
+    {%endblock%}
+    <link rel="icon" href="{% static 'app/images/favicon.ico' %}">
+
+    {% if title %}
+        <title>Support Dashboard - {{ title }}</title>
+    {% else %}
+        <title>Support Dashboard</title>
+    {% endif %}
+
+    {% block stylesheet_before %}
+           <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
+    {% endblock %}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+
+    {% block stylesheet_middle %}
+    {% endblock %}
+
+    {% block stylesheet_variables %}
+    {% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="{%  static 'app/css/styles.css' %}">
+
+    {%block stylesheet_after%}
+    {%endblock%}
+
+    {%block styles%}
+    {%endblock%}
+
+</head>
+<body>
+
+
+{{ request.user.username }}
+<br>
+{{ request.user.Profile_ID }}
+<br>
+{{ request.user.get_roles }}
+<br>
+{{ request.user.UseGravatar }}
+<br>
+<img src="{{ request.user.get_ProfileImage }}" alt="">
+<br>
+{{ request.user.is_authenticated }}
+<br>
+{{ request.user.Full_Name }}
+
+    {% include 'app/navbar.html' %}
+
+    <section class="container container-spacer">
+        {% block content %}{% endblock %}
+    </section>
+
+    {% include 'app/footer.html' %}
+
+    {% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script>
+        (function($){
+            $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+              if (!$(this).next().hasClass('show')) {
+                $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+              }
+              var $subMenu = $(this).next(".dropdown-menu");
+              $subMenu.toggleClass('show');
+
+              $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+                $('.dropdown-submenu .show').removeClass("show");
+              });
+
+              return false;
+            });
+        })(jQuery)
+    </script>
+    {% endblock %}
+    {% block custom_script_after %}
+    {% endblock %}
+
+</body>
+</html>

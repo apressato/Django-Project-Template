@@ -1,0 +1,39 @@
+{% load macros %}
+
+{% macro profile-pic-form aProfilePicForm %}
+    <form class="form user" method="POST" action="#" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="picturesbmt">
+        <div class="card mb-3 shadow">
+            <div class="card-body text-center pb-0">
+                <div class="picture">
+                    <img class="picture-src" id="ProfilePic" src="{{ request.user.get_ProfileImage }}"/>
+                    <input type="file" id="ProfileImage" name="profile_image" onchange="previewFile()" title="" accept="image/png, image/jpeg, image/gif">
+                </div>
+                <div id="commands">
+                    <a class="btn btn-primary" href="https://avatarmaker.com/" target="_blank">
+                        Build Your Avatar
+                    </a><br/>
+                    <label class="checkboxcontainer" style="margin-top: 10px; margin-right: 10px;">
+                        <input type="checkbox" value="delete" name="Delete">
+                        <span class="checkmark"></span>
+                        Delete
+                    </label>
+                    <label class="checkboxcontainer">
+                        {% if request.user.UseGravatar %}
+                            <input type="checkbox" value="Gravatar" name="UseGravatar" checked>
+                        {% else %}
+                            <input type="checkbox" value="Gravatar" name="UseGravatar">
+                        {% endif %}
+                        <span class="checkmark"></span>
+                        Use Gravatar
+                    </label>
+                </div>
+            </div>
+            <hr class="ms-4 me-4"/>
+            <div class="card-body text-center pt-0">
+                <button class="btn btn-primary btn-sm" type="submit">Save Changes</button>
+            </div>
+        </div>
+    </form>
+{% endmacro %}

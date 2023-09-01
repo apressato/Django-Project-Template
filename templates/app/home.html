@@ -1,0 +1,13 @@
+{% extends "app/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+    <style>
+        body {
+            background: url("{%  static 'app/images/home_background.jpg' %}") no-repeat;
+            background-size: cover;
+          /*background-attachment: fixed;*/
+        }
+    </style>
+{% endblock %}

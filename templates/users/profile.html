@@ -1,0 +1,82 @@
+{% extends "app/base.html" %}
+
+{% load static %}
+{% load macros %}
+{% loadmacros "users/_macros/_profile-data-form.html" %}
+{% loadmacros "users/_macros/_profile-pic-form.html" %}
+{% loadmacros "users/_macros/_profile-user-form.html" %}
+{% loadmacros "users/_macros/_profile-change-password-form.html" %}
+
+{% block stylesheet_after %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+        <div class="Profile">
+            <h1 class="text-dark text-center mb-4">{{request.user.last_name}}, {{request.user.first_name}}</h1>
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                    {% use_macro profile-pic-form user_pic_form %}
+                    <br>
+                    {% use_macro profile-user-form user_special_form %}
+                    <br>
+                    {% use_macro profile-change-password-form user_password_form %}
+                </div>
+                <div class="col-lg-8">
+                    {% use_macro profile-data-form user_common_form %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+{% endblock content %}
+
+{% block custom_script_after %}
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{% static 'app/js/theme.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script type="text/javascript">
+         function previewFile() {
+              var preview = document.querySelector('img[id=ProfilePic]');
+              var file = document.querySelector('input[type=file]').files[0];
+              var reader = new FileReader();
+
+              // when user select an image, `reader.readAsDataURL(file)` will be triggered
+              // reader instance will hold the result (base64) data
+              // next, event listener will be triggered and we call `reader.result` to get
+              // the base64 data and replace it with the image tag src attribute
+              reader.addEventListener("load", function() {
+                console.log('before preview');
+                preview.src = reader.result;
+                console.log('after preview');
+              }, false);
+
+              if (file) {
+                console.log('inside if');
+                reader.readAsDataURL(file);
+              } else {
+                console.log('inside else');
+              }
+        }
+
+        $(document).ready(function() {
+            $("#password_changer a").on('click', function(event) {
+                event.preventDefault();
+                if($('#password_changer input').attr("type") === "text"){
+                    $('#password_changer input').attr('type', 'password');
+                    $('#password_changer i').addClass( "fa-eye-slash" );
+                    $('#password_changer i').removeClass( "fa-eye" );
+                }else if($('#password_changer input').attr("type") === "password"){
+                    $('#password_changer input').attr('type', 'text');
+                    $('#password_changer i').removeClass( "fa-eye-slash" );
+                    $('#password_changer i').addClass( "fa-eye" );
+                }
+            });
+        });
+    </script>
+{% endblock %}
+

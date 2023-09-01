@@ -1,0 +1,154 @@
+{% load static %}
+
+{% load macros %}
+{% loadmacros "app/_macros/_menu_items.html" %}
+
+<!-- Navbar -->
+<nav class="navbar sticky-top navbar-expand-lg shadow navbar-dark bg-dark bg-gradient">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'home' %}">
+        <img
+          src="{% static 'app/images/Main_Logo_dark.png' %}"
+          class="logo--"
+          alt="Logo"
+          loading="lazy"
+        />
+          Title Here
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link dropdown-toggle"
+               href="#"
+               id="navbarDropdownMenuAbout"
+               role="button"
+               data-mdb-toggle="dropdown"
+               aria-expanded="false"
+            >About</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuAbout">
+                {% url 'get-license' as item_link %}
+                {% use_macro menu_item "Site License" item_link %}
+            </ul>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdownMenuFunctions"
+             role="button"
+             data-mdb-toggle="dropdown"
+             aria-expanded="false">Drop Down Menu</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+            <!--  Begin Drop Down menu -->
+			<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuKnoledgeBase">
+                {#% use_macro menu_divider %#}
+                {#% url 'item endpoint' as item_link %#}
+                {#% use_macro menu_item "Item Name" item_link %}
+            </ul>
+            <!--  End Drop Down menu -->
+          </ul>
+        </li>
+      </ul>
+      {% endif %}
+      <!-- Left links -->
+      <!-- SearchBar -->
+      {% include 'app/searchbar.html' %}
+      <!-- SearchBar -->
+    </div>
+    <!-- Collapsible wrapper -->
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+    {% if not request.user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        </ul>
+    {% else %}
+      <!-- Notifications -->
+      {% include "app/_parts/_notifications_no_itms.html" %}
+      <!-- Messagges -->
+      {% include "app/_parts/_messagges_no_itms.html" %}
+      <!-- divider -->
+      <div class="vr vr-blurry me-3 ms-2" style="border-right: 3px solid white;"></div>
+      <!-- Avatar -->
+      <div class="dropdown">
+        <a
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuAvatar"
+          role="button"
+          data-mdb-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span class="d-none d-lg-inline ms-2 me-2 text-profile-ap small">{{ request.user.get_full_name }}</span>
+          <img
+            src="{{ request.user.get_ProfileImage }}"
+            class="border rounded-circle img-profile ml-4"
+            alt="Avatar of user {{ request.user.get_full_name }}"
+            loading="lazy"
+            height="32px"
+          />
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdownMenuAvatar"
+        >
+            <li>
+              <a class="dropdown-item" href="{% url 'profile' %}">
+                  <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Profile
+              </a>
+            </li>
+            {% if 'Admin' in request.user.get_roles or request.user.is_superuser %}
+            <li>
+                <a class="dropdown-item" href="{% url 'admin:index' %}">
+                    <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>Admin Panel
+                </a>
+            </li>
+            {% endif %}
+            <li>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>Activity log
+                </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            {% if 'Admin' in request.user.get_roles or request.user.is_superuser %}
+            <li>
+                <a class="dropdown-item" href="{% url "info" %}">
+                    <i class="fas fa-info-circle fa-sm fa-fw me-2 text-gray-400"></i>Info
+                </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            {% endif %}
+            <li>
+                <a class="dropdown-item" href="{% url "logout" %}">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
+                </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Right elements -->
+  {% endif %}
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
