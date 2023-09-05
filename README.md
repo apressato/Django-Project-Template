@@ -1,7 +1,7 @@
 # Django-Project-Template
-A small skeleton of Django Project for begin my project with most of the settings already set.
+ A small starter Django's Skeleton Project with all settings already set.
 
-#### This skeleton contains:
+#### This project contains:
  * Extended User Structure
  * Login / Logout
  * Profile editing (to be fixed)
@@ -33,7 +33,7 @@ A small skeleton of Django Project for begin my project with most of the setting
 ```
 ```bash
   # Install all requirements
-  pythin -m pip install -r @requirements.txt
+  python -m pip install -r @requirements.txt
 ```
 ```bash
   # Create Django Project
