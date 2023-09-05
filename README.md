@@ -39,9 +39,11 @@
   # Create Django Project
   django-admin startproject project_name  
 ```
-Extract content of the file _master.zip_ except for the folder _DjangoProjectTemplate_.
-
-From that folder extract files _settings.py_, _urls.py_ and _static.py_ in your project_name folder.
+Extract the file _unzipgithubhelper.py_ from _master.zip_ then execute the command below:
+```bash
+  # Extract template
+  python .\unzipgithubhelper.py -f .\master.zip -o .\ -p {your project name} 
+```
 ```bash
   # Clean folder
   del master.zip
@@ -61,9 +63,9 @@ From that folder extract files _settings.py_, _urls.py_ and _static.py_ in your 
 ```bash
   # Download Free version of Material Design Bootstrap UI Kit
   wget https://github.com/mdbootstrap/mdb-ui-kit/archive/refs/heads/master.zip
-  # Unzip it in the right folder under static
-  unzip master.zip ./static/MDB5UIKIT
-```
+  # Extract UI KIT
+  python .\unzipgithubhelper.py -f .\master.zip -o /static/MDB5UIKIT
+  ```
 
 You can add more functions to your site by using the Django command _startapp_:
 ```bash
