@@ -15,6 +15,7 @@ import os
 from ckeditor_uploader import views as ckeditor_views
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
+from common.constants import TITLE
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +42,7 @@ if SECRET_KEY is None:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Custom Error Hendling page
 handler404 = 'root.views.not_found_404'
@@ -56,6 +57,7 @@ STATICFILES_FINDERS = (
 
 # Application definition
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,10 +66,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',  # CKEditor config
     'ckeditor_uploader',  # CKEditor media uploader
+    'django_extensions',
+    'widget_tweaks',
+    'django_addanother',
     'macros',
     'users',
     'about',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +83,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 ROOT_URLCONF = 'DjangoProjectTemplate.urls'
 
@@ -239,6 +247,92 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+# This allows the toolbar to be displayed for requests from this IP address.
+INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', 'localhost',)
+
+# Jazzmin Settings
+JAZZMIN_SETTINGS = {
+    "site_title": TITLE,
+    "site_header": TITLE,
+    "site_brand": TITLE,
+    "site_logo": "img/logo.png",
+    "login_logo": None,
+    "login_logo_dark": None,
+    "site_logo_classes": "img-circle",
+    "site_icon": None,
+    "welcome_sign": f"Welcome to the {TITLE}",
+    "copyright": TITLE,
+    "search_model": ["auth.User", "auth.Group"],
+    "user_avatar": None,
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"model": "auth.User"},
+        {"name": "Return to Site", "url": "/", "new_window": False, "icon": "fas fa-home"}
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["users", "auth"],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "users.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": False,
+    "custom_css": None,
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": True,
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    "language_chooser": False,
+    #  User Menu: Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [{"name": "Return to Site", "url": "/", "new_window": False, "icon": "fas fa-home"}],
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": True,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "cyborg",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    "custom_links": {
+        "Admin": [{
+            "name": "Return to Main Site",
+            "url": "/",
+        }]
+    },
+    "actions_sticky_top": True
+}
+
 
 # remember to run the app with:
 # ./manage.py runserver --insecure

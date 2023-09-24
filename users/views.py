@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 
 from .forms import UserCommonFields, UserPicFields, UserSpecialFields, UserPasswordFields
 
+
 # Create your views here.
 
 def loginUser(request):
@@ -16,27 +17,27 @@ def loginUser(request):
         username = request.POST['username'].lower()
         password = request.POST['password']
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=username)
         except:
-            messages.error(request, 'Username does not exist')
-        user = authenticate(request, username=username, password=password)
+            messages.error(request, 'Username OR password is incorrect')
+        user = authenticate(request, email=username, password=password)
         if user is not None:
             login(request, user)
             return redirect(request.GET['next'] if 'next' in request.GET else 'home')
         else:
             messages.error(request, 'Username OR password is incorrect')
     return render(request, 'users/login.html')
-    
-    
+
+
 def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logged out!')
     return redirect('login')
-    
-    
+
+
 class AccountProfile(TemplateView):
     template_name = 'users/profile.html'
-    
+
     def get(self, request, *args, **kwargs):
         current_user = request.user
         user_common_form = UserCommonFields(instance=current_user)
@@ -50,7 +51,7 @@ class AccountProfile(TemplateView):
             'user_password_form': user_password_form,
         }
         return self.render_to_response(context)
-        
+
     def post(self, request, *args, **kwargs):
         current_user = request.user
         form_info = request.POST
