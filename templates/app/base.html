@@ -15,9 +15,9 @@
     <link rel="icon" href="{% static 'app/images/favicon.ico' %}"  type="image/x-icon">
 
     {% if title %}
-        <title>Youur Title Here - {{ title }}</title>
+        <title>{{ SITE_NAME }} - {{ title }}</title>
     {% else %}
-        <title>Youur Title Here</title>
+        <title>{{ SITE_NAME }}</title>
     {% endif %}
 
     <!-- Font Awesome -->
@@ -69,6 +69,9 @@
     {% block script %}
         <!-- MDB -->
         <script type="text/javascript" src="{% static 'MDB5UIKIT/js/mdb.min.js' %}"></script>
+    {% endblock %}
+
+    {% block JQuery %}
 		<!-- JQuery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>

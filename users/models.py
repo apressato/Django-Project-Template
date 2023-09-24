@@ -9,6 +9,7 @@ import uuid
 from django.db.models.deletion import CASCADE, SET_NULL
 from .utilities import secure_upload_filename
 from ckeditor.fields import RichTextField
+from users.managers import UserManager
 import logging
 
 # Create your models here.
@@ -25,7 +26,9 @@ class Roles(models.Model):
 
 
 class ExtendedUser(AbstractUser):
-    profile_image = models.ImageField(max_length=500, upload_to=secure_upload_filename, verbose_name="Profilo Avatar",
+    username = None
+    email = models.EmailField(unique=True, error_messages={'unique': 'This email already exists'})
+    profile_image = models.ImageField(max_length=500, upload_to=secure_upload_filename, verbose_name="Profile Avatar",
                                       blank=True, null=True, default=settings.DEFAULT_PROFILE_PIC)
     UseGravatar = models.BooleanField(default=False, verbose_name="Use Gravatar")
     Short_Intro = RichTextField(blank=True, null=True, verbose_name="Short Intro")
@@ -39,12 +42,17 @@ class ExtendedUser(AbstractUser):
                                           ('fr_FR', 'fr_FR')),
                                  default='en_US', verbose_name="Language Culture")
     Screen_scale = models.IntegerField(blank=False,
-                                    choices=((100, '100%'),
-                                             (125, '125%'),
-                                             (150, '150%'),
-                                             (175, '175%')),
-                                    default=100, verbose_name="Screen Scale")
+                                       choices=((100, '100%'),
+                                                (125, '125%'),
+                                                (150, '150%'),
+                                                (175, '175%')),
+                                       default=100, verbose_name="Screen Scale")
     roles = models.ManyToManyField(Roles, blank=True, verbose_name="Roles")
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def gravatar_url(self, size=80):
         return "http://www.gravatar.com/avatar/%s?d=identicon&s=%d" % \
@@ -85,3 +93,4 @@ class ExtendedUser(AbstractUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+        ordering = ('first_name', 'last_name')
