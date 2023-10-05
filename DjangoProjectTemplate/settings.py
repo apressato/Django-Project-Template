@@ -40,7 +40,7 @@ if SECRET_KEY is None:
     raise Exception("SECRET_KEY not found")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -84,6 +84,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# EMAIL CONFIGREATION
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "your_application_email_here@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "Your_APP_Password_Here")
+
+# how to enable app security and app password:
+#   https://support.google.com/accounts/answer/185833
+
 if DEBUG:
     INSTALLED_APPS += ['debug_toolbar']
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
@@ -112,12 +123,22 @@ WSGI_APPLICATION = 'DjangoProjectTemplate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite3")
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db/db.sqlite3',
+        'ENGINE': f'django.db.backends.{DB_ENGINE}',
     }
 }
+
+if DB_ENGINE == "sqlite3":
+    DATABASES["default"]["NAME"] = BASE_DIR / 'db/db.sqlite3'
+else:
+    DATABASES["default"]["NAME"] = os.environ.get("DB_NAME")
+    DATABASES["default"]["USER"] = os.environ.get("DB_USER")
+    DATABASES["default"]["PASSWORD"] = os.environ.get("DB_PASSWORD")
+    DATABASES["default"]["HOST"] = os.environ.get("DB_HOST")
+    DATABASES["default"]["PORT"] = os.environ.get("DB_PORT")
 
 
 # Password validation

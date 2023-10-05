@@ -1,0 +1,83 @@
+/*
+ * Copyright (c) 2020-2023 by APressato <apressato.oss@gmail.com>
+ *
+ * This file is part of Support_DashBoard.
+ * Support_DashBoard is a website to help Support Teams in their work.
+ *
+ * Support_DashBoard is free software: you can redistribute it and/or modify
+ * it under the terms of the
+ * Creative Commons Attribution ShareAlike 4.0 International
+ * as published by Creative Commons.
+ *
+ * Support_DashBoard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY.  See the
+ * Creative Commons Attribution ShareAlike 4.0 International for more details.
+ *
+ * You should have received a copy of the
+ * Creative Commons Attribution ShareAlike 4.0 International
+ * along with Support_DashBoard. If not,
+ * see <https://creativecommons.org/licenses/by-sa/4.0/legalcode>.
+ */
+
+section.releases .heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    width: 240px;
+    flex-shrink: 0;
+}
+section.releases .intro {
+    max-width: 660px;
+    margin: 0 auto 50px;
+}
+section.releases .heading .date {
+    color: grey;
+    font-size: 16px;
+    display: block;
+    margin-top: 3px;
+}
+section.releases .version {
+    display: flex;
+    padding: 30px 30px 0;
+    border-top: 1px solid #ddd;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+}
+section.releases .version ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+section.releases .version ul li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+section.releases .version .release-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    border: 1px solid #fff;
+}
+section.releases .version .release-badge.new {
+    border-color: #49aee4;
+    color: #49aee4;
+}
+section.releases .version .release-badge.improved {
+    border-color: #88bf57;
+    color: #79b544;
+}
+section.releases .version .release-badge.fixed {
+    border-color: #6d7a8a;
+    color: #6d7a8a;
+}
+@media (max-width: 900px) {
+    section.releases .version {
+        flex-direction: column;
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 90%;
+    }
+}
