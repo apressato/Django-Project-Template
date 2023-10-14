@@ -17,6 +17,11 @@ from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 from common.constants import TITLE
 
+# from decouple import config
+
+# ############################################################################################
+# DJANGO Settings
+# ############################################################################################
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 REMOTE_BASE_DIR = os.environ.get('REMOTE_PATH', None)
@@ -112,6 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'common.common_context_processor.constant_context_processor',
             ],
         },
     },
@@ -119,6 +125,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoProjectTemplate.wsgi.application'
 
+# A list of all the people who get code error notifications.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#admins
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+
+# A list in the same format as ADMINS that specifies who should get broken link notifications when
+# BrokenLinkEmailsMiddleware is enabled.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#managers
+MANAGERS = ADMINS
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -159,7 +175,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -170,7 +185,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -191,17 +205,52 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Default Profiles Pics folder
-PROFILE_PIC_FOLDER = "profiles_pics/"
-DEFAULT_PROFILE_PIC = f"{PROFILE_PIC_FOLDER}/user-default.png"
-
 AUTH_USER_MODEL = 'users.ExtendedUser'
+
+# A logging configuration dictionary.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
 
 # ## Sessions ##
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True     # opional, as this will log you out when browser is closed
 # SESSION_COOKIE_AGE = 300                   # 0r 5 * 60, same thing
 # SESSION_SAVE_EVERY_REQUEST = True          # Will prrevent from logging you out after 300 seconds
 
+
+# ############################################################################################
+# Project Settings
+# ############################################################################################
+
+# Default Profiles Pics folder
+PROFILE_PIC_FOLDER = "profiles_pics/"
+DEFAULT_PROFILE_PIC = f"{PROFILE_PIC_FOLDER}/user-default.png"
+
+
+# ############################################################################################
+# PLUG-INS Settings
+# ############################################################################################
 
 # ckeditor upload path
 CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR, "uploads/")

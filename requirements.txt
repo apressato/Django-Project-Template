@@ -8,6 +8,5 @@ django-macros
 django-extensions
 django-Jazzmin
 django-widget-tweaks
-django-addanother
 
 pip~=23.2.1
